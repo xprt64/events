@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+ @copyright Constantin Galbenu <xprt64@gmail.com>
+-->
+<html>
+	<head>
+		<title>Server Sent Events Demo</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+		<script>
+			var MyApp	=	{};
+			
+			jQuery(function($){
+				MyApp.sse	=	new EventSource( 'sse-frontend.php');
+				
+				MyApp.sse.addEventListener('missedCall', function(e){
+					var data	=	JSON.parse(e.data);
+					console.log(e);
+					console.log(data);
+					
+					$('<li>' + e.data + '</li>').appendTo('#events')
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<h1>Server Sent Events Demo</h1>
+		<div>Events:</div>
+		<ul id="events"></ul>
+	</body>
+</html>
